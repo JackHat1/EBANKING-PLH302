@@ -1,0 +1,13 @@
+name: Feature request
+description: Αίτημα νέου χαρακτηριστικού
+title: "[Feature] "
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: idea
+    attributes:
+      label: Περιγραφή
+      description: Τι θα θέλατε να προστεθεί/αλλάξει;
+      placeholder: ...
+    validations:
+      required: true

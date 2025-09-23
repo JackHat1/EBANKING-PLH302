@@ -1,0 +1,13 @@
+name: Bug report
+description: Αναφορά σφάλματος
+title: "[Bug] "
+labels: ["bug"]
+body:
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: Τι συνέβη;
+      description: Περιγράψτε το πρόβλημα και τα βήματα αναπαραγωγής.
+      placeholder: ...
+    validations:
+      required: true
