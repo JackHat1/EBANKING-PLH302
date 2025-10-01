@@ -1,0 +1,131 @@
+TAYTOPOISI ME LOGIN O KATHWE XRISTIS KAI YPALILOI ME DIAFORETIKA PRIVILEGES  ( 2FA ME EPIFILAXI)
+
+DIAXEIRISI OIKONOMIKO ( ANALIPSI , KATATHESI , METAFORA SE TRITO , PLIROMI LOGARIASMON APO ETAIRIES (DEI) )
+
+ENAS USER MPOREI NA EINAI KATOXOS PARAPANO APO 1 LOGARIASMO
+
+AN USER = COMPANY PRPEI NA PLIRONEI TELOI KAI TOYS TOKOYS STIN TRAPEZA KAI THA MPOREI NA VGAZEI TOYS LOGARIASMOYS POY PREPEI NA PLIROTHOYN APO TON EKASTOTE PELATI 
+
+
+I TRAPEZA EINAI USER , OPOY EXEI YPOLOIPO POSO , KAI MPOREI NA KANEI EISPRAXEIS 
+
+METAFORA ME EMVASMATA TRAPEZA TRITI KAI LOCAL LOGARIASMOI
+
+SIMULATE TO SEPA KAI SWIFT GIA DIATRAPEZIKES SYNNALAGES MESO XML MINIMATON 
+
+TO SYSTIMA PREPEI NA EINAI MODULAR SE PERIPTOSI POY THA PREPEI NA ALLAXOYME KAPOIO PROTOKOLO PX SEPA INSTANT
+
+PAGIES ENTOLES OI OPOIES THA PREPEI NA EKTELOYN TIN PLIROMI ANEJOFLITON LOGARIASMON GIA DEI, COSMOTE ETC 
+
+STATEMENT LOG ME ( ΗΜΕΡΟΜΗΝΙΑ - ΠΟΣΟ - ΑΙΤΙΟΛΟΓΙΑ - ΥΠΟΛΟΙΠΟ ΜΕΤΑ ΤΗΝ ΕΚΤΕΛΕΣΗ)
+
+ADMIN EXEI PROSVASI STO NA DEI YPOLOIPO , ANEJOFLITOYS LOGARIASMOYS , DIMIOYRGIA ACCOUNT , EKTELESI PAGIVN LOGARIASMON ETC 
+
+
+
+REQUIREMENT: 
+
+MONO EYRO 
+
+OXI DANEIA , PISTOTIKES KARTES
+
+CLI KAI GUI 
+
+SIMULATE TIME PASSING GIA PROSOMOIOSI TON IMERON OPOY THA EKTELEONTAI PAGIES , PLIROMI TOKON ETC 
+
+KATASKEVI TON DEDOMENON OPOY THA XRISIMOPOIOSYME CSV GIA EFKOLIA 
+
+
+1. Scope & Υποθέσεις
+
+ Καθορισμός νομίσματος: μόνο Ευρώ (€).
+
+ Εξαίρεση: Όχι δάνεια/πιστωτικές κάρτες.
+
+ Υπόθεση: Όλα τα δεδομένα αποθηκεύονται σε CSV (σύμφωνα με δομή E-BANKING).
+
+ Καταγραφή παραδοχών (π.χ. η τράπεζα έχει έναν δικό της business account για fees/τόκους).
+
+2. Actors & Roles
+
+ Ορισμός ρόλων:
+
+Individual Customer (φυσικό πρόσωπο, πολλοί λογαριασμοί, secondary owners).
+
+Company Customer (1 business account, εκδίδει bills, χρεώνεται με fees).
+
+Admin (διαχείριση χρηστών, λογαριασμών, statements, εκτέλεση πάγιων).
+
+Bank/System (αυτόματος εκτελεστής για τόκους, fees, πάγιες).
+
+ Δικαιώματα ανά ρόλο (privileges matrix).
+
+3. Functional Requirements
+
+ Authentication/Login με διαφορετικά privileges.
+
+ Προσθήκη 2FA (σημειώνεται ως NFR).
+
+ Διαχείριση Οικονομικών:
+
+Κατάθεση (Deposit).
+
+Ανάληψη (Withdrawal).
+
+Μεταφορά σε τρίτο (Transfer intra-bank & interbank).
+
+Πληρωμή Λογαριασμών (Bills με RF code).
+
+ Διατραπεζικές Μεταφορές: SEPA/SWIFT simulation με XML, modular για SEPA Instant.
+
+ Πάγιες Εντολές (Standing Orders): Payment Order (RF) & Transfer Order.
+
+ Statements: εγγραφή ανά συναλλαγή (ημ/νία, ποσό, αιτιολογία, υπόλοιπο).
+
+ Simulate Time Passing: τόκοι, τέλη, εκτέλεση πάγιων, αυτόματα.
+
+4. Business Rules
+
+ Κάθε λογαριασμός έχει μοναδικό IBAN (20 χαρακτήρες, συγκεκριμένη μορφή).
+
+ Individual μπορεί να έχει πολλούς λογαριασμούς.
+
+ Company μπορεί να έχει μόνο 1 business account.
+
+ Οι τόκοι υπολογίζονται καθημερινά, αποδίδονται στο τέλος μήνα.
+
+ Οι fees (business accounts) χρεώνονται στο τέλος μήνα.
+
+ Bills: μπορεί να υπάρχουν πολλά με ίδιο RF, αλλά μόνο 1 ενεργό κάθε φορά.
+
+ Standing Orders: αποτυγχάνουν max 3 φορές, μετά συνεχίζει ο επόμενος κύκλος.
+
+5. Non-Functional Requirements
+
+ Ασφάλεια: 2FA, session mgmt, audit logs.
+
+ Διαθεσιμότητα: 99% (simulated).
+
+ Απόδοση: <2 sec για βασικές συναλλαγές.
+
+ Ευχρηστία: βασικές λειτουργίες σε ≤3 βήματα.
+
+ Επεκτασιμότητα: modular αρχιτεκτονική (Bridge για πρωτόκολλα).
+
+6. Data & Storage
+
+ Δομή φακέλων (users, accounts, orders, bills, statements).
+
+ Αρχεία σε CSV (users.csv, accounts.csv, orders.csv, bills.csv, statements/ibanxxx.csv).
+
+ Προετοιμασία demo δεδομένων για testing (users, accounts, sample bills, standing orders).
+
+7. Risks & Open Issues
+
+ Ρίσκο: Πολυπλοκότητα με πάγιες εντολές και αποτυχίες.
+
+ Ρίσκο: Χειρισμός interbank συναλλαγών (SEPA/SWIFT simulation).
+
+ Ανοικτό: Πώς ακριβώς θα προσομοιωθεί το SEPA XML (ελάχιστα πεδία vs πλήρες).
+
+ Ανοικτό: Τι κανάλια ειδοποίησης θα υποστηριχθούν (π.χ. email, SMS, push).
